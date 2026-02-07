@@ -1,5 +1,5 @@
 # Django Framework
-Django==6.0.2
+Django==5.0.2
 
 # Image handling
 Pillow==11.0.0
