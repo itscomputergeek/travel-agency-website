@@ -6,3 +6,9 @@ pip install -r requirements.txt
 
 python manage.py collectstatic --no-input
 python manage.py migrate
+
+# Create superuser if none exists
+python manage.py create_superuser_if_none
+
+# Import packages if needed
+# python manage.py import_packages
