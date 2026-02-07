@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: travel-agency-website
+    runtime: python
+    buildCommand: "bash build.sh"
+    startCommand: "gunicorn travel_agency.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        sync: false
+
+databases:
+  - name: travel-agency-db
+    databaseName: travel_agency_db
+    user: travel_agency_user
