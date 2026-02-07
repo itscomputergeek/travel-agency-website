@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="page-header py-5 text-white position-relative" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); overflow: hidden;">
+    <!-- Cosmic Stars Background -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent); background-size: 200px 200px; opacity: 0.4;"></div>
+
+    <div class="container text-center position-relative" style="z-index: 1;">
+        <h1 class="display-5 fw-bold">Contact Us</h1>
+        <p class="lead">Get in touch with us for any queries or assistance</p>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5" style="background: #0a0a0a; min-height: 70vh;">
+    <div class="container">
+        <div class="row">
+            <!-- Contact Form -->
+            <div class="col-lg-8 mb-4">
+                <div class="card shadow-sm" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h5 class="mb-0"><i class="fas fa-envelope me-2"></i>Send us a Message</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{% url 'contact_submit' %}">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Your Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="name" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Email <span class="text-danger">*</span></label>
+                                    <input type="email" name="email" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Phone Number <span class="text-danger">*</span></label>
+                                    <input type="tel" name="phone" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Inquiry Type</label>
+                                    <select name="inquiry_type" class="form-select">
+                                        <option value="general">General Inquiry</option>
+                                        <option value="package">Package Inquiry</option>
+                                        <option value="booking">Booking Related</option>
+                                        <option value="complaint">Complaint</option>
+                                        <option value="feedback">Feedback</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label text-light">Subject <span class="text-danger">*</span></label>
+                                    <input type="text" name="subject" class="form-control" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label text-light">Message <span class="text-danger">*</span></label>
+                                    <textarea name="message" class="form-control" rows="5" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm mb-4" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-header text-white" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+                        <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>Contact Information</h6>
+                    </div>
+                    <div class="card-body">
+                        {% if site_settings %}
+                        <div class="mb-3 text-light">
+                            <i class="fas fa-phone text-primary me-2"></i>
+                            <strong>Phone:</strong><br>
+                            <a href="tel:{{ site_settings.contact_phone }}" class="text-decoration-none">{{ site_settings.contact_phone }}</a>
+                            {% if site_settings.contact_phone_2 %}
+                            <br><a href="tel:{{ site_settings.contact_phone_2 }}" class="text-decoration-none">{{ site_settings.contact_phone_2 }}</a>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3 text-light">
+                            <i class="fas fa-envelope text-primary me-2"></i>
+                            <strong>Email:</strong><br>
+                            <a href="mailto:{{ site_settings.contact_email }}" class="text-decoration-none text-info">{{ site_settings.contact_email }}</a>
+                        </div>
+
+                        {% if site_settings.whatsapp_number %}
+                        <div class="mb-3 text-light">
+                            <i class="fab fa-whatsapp text-success me-2"></i>
+                            <strong>WhatsApp:</strong><br>
+                            <a href="https://wa.me/{{ site_settings.whatsapp_number }}" class="text-decoration-none text-success" target="_blank">{{ site_settings.whatsapp_number }}</a>
+                        </div>
+                        {% endif %}
+
+                        <div class="mb-3 text-light">
+                            <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                            <strong>Address:</strong><br>
+                            {{ site_settings.address }}
+                        </div>
+                        {% else %}
+                        <p class="text-muted">Contact information will be available soon.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card shadow-sm" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h6 class="mb-0"><i class="fas fa-clock me-2"></i>Business Hours</h6>
+                    </div>
+                    <div class="card-body text-light">
+                        <p class="mb-2"><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM</p>
+                        <p class="mb-2"><strong>Saturday:</strong> 10:00 AM - 4:00 PM</p>
+                        <p class="mb-0"><strong>Sunday:</strong> Closed</p>
+                    </div>
+                </div>
+
+                {% if site_settings %}
+                <div class="card shadow-sm mt-4" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-body text-center">
+                        <h6 class="mb-3 text-white">Follow Us</h6>
+                        <div class="d-flex justify-content-center gap-3">
+                            {% if site_settings.facebook_url %}
+                            <a href="{{ site_settings.facebook_url }}" class="btn btn-outline-primary" target="_blank">
+                                <i class="fab fa-facebook fa-lg"></i>
+                            </a>
+                            {% endif %}
+                            {% if site_settings.instagram_url %}
+                            <a href="{{ site_settings.instagram_url }}" class="btn btn-outline-danger" target="_blank">
+                                <i class="fab fa-instagram fa-lg"></i>
+                            </a>
+                            {% endif %}
+                            {% if site_settings.twitter_url %}
+                            <a href="{{ site_settings.twitter_url }}" class="btn btn-outline-info" target="_blank">
+                                <i class="fab fa-twitter fa-lg"></i>
+                            </a>
+                            {% endif %}
+                            {% if site_settings.youtube_url %}
+                            <a href="{{ site_settings.youtube_url }}" class="btn btn-outline-danger" target="_blank">
+                                <i class="fab fa-youtube fa-lg"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

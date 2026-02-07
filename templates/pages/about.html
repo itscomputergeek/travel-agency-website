@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="page-header py-5 text-white position-relative" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); overflow: hidden;">
+    <!-- Cosmic Stars Background -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent); background-size: 200px 200px; opacity: 0.4;"></div>
+
+    <div class="container text-center position-relative" style="z-index: 1;">
+        <h1 class="display-5 fw-bold">About Us</h1>
+        <p class="lead">Your trusted travel partner</p>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5" style="background: #0a0a0a;">
+    <div class="container">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="{% static 'images/about.jpg' %}" class="img-fluid rounded shadow" alt="About Us" onerror="this.src='https://via.placeholder.com/600x400?text=About+Us'">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="display-6 fw-bold mb-4 text-white">Who We Are</h2>
+                {% if site_settings and site_settings.about_us_short %}
+                <p class="lead text-light">{{ site_settings.about_us_short }}</p>
+                {% else %}
+                <p class="lead text-light">We are a leading travel agency dedicated to creating unforgettable travel experiences for our clients.</p>
+                <p class="text-light">With years of experience in the travel industry, we specialize in curating personalized travel packages that cater to your unique preferences and budget. Our team of travel experts is passionate about helping you explore the world's most amazing destinations.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Why Choose Us -->
+        <div class="row mb-5">
+            <div class="col-12 text-center mb-4">
+                <h2 class="display-6 fw-bold text-white">Why Choose Us</h2>
+                <p class="text-light">Discover what makes us different</p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center shadow-sm h-100 category-card">
+                    <div class="card-body">
+                        <i class="fas fa-award fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title text-white">Best Prices</h5>
+                        <p class="card-text text-light">Competitive pricing with no hidden charges</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center shadow-sm h-100 category-card">
+                    <div class="card-body">
+                        <i class="fas fa-headset fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title text-white">24/7 Support</h5>
+                        <p class="card-text text-light">Round-the-clock customer support for your convenience</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center shadow-sm h-100 category-card">
+                    <div class="card-body">
+                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title text-white">Expert Team</h5>
+                        <p class="card-text text-light">Experienced travel professionals at your service</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card text-center shadow-sm h-100 category-card">
+                    <div class="card-body">
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title text-white">100% Safe</h5>
+                        <p class="card-text text-light">Secure bookings and safe travel experiences</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Mission & Vision -->
+        <div class="row mb-5">
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow-sm h-100" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-body">
+                        <h4 class="card-title text-primary mb-3">
+                            <i class="fas fa-bullseye me-2"></i>Our Mission
+                        </h4>
+                        <p class="card-text text-light">To provide exceptional travel experiences that exceed our clients' expectations, making every journey memorable and hassle-free. We strive to offer personalized service, competitive pricing, and a wide range of destinations to choose from.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow-sm h-100" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-body">
+                        <h4 class="card-title text-primary mb-3">
+                            <i class="fas fa-eye me-2"></i>Our Vision
+                        </h4>
+                        <p class="card-text text-light">To become the most trusted and preferred travel partner, known for our commitment to quality, innovation, and customer satisfaction. We envision a world where everyone can explore new destinations and create lasting memories.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="row text-center py-5 rounded" style="background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);">
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <h2 class="display-4 fw-bold text-primary">500+</h2>
+                <p class="text-light">Happy Clients</p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <h2 class="display-4 fw-bold text-primary">100+</h2>
+                <p class="text-light">Tour Packages</p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <h2 class="display-4 fw-bold text-primary">50+</h2>
+                <p class="text-light">Destinations</p>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h2 class="display-4 fw-bold text-primary">5+</h2>
+                <p class="text-light">Years Experience</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta py-5 text-white position-relative" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); overflow: hidden;">
+    <!-- Cosmic Background -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent); background-size: 200px 200px; opacity: 0.3;"></div>
+
+    <div class="container text-center position-relative" style="z-index: 1;">
+        <h2 class="display-6 fw-bold mb-3">Ready to Explore?</h2>
+        <p class="lead mb-4">Let us help you plan your next adventure</p>
+        <a href="{% url 'package_list' %}" class="btn btn-light btn-lg me-2">Browse Packages</a>
+        <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
+    </div>
+</section>
+
+{% endblock %}

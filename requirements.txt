@@ -1,0 +1,21 @@
+# Django Framework
+Django==6.0.2
+
+# Image handling
+Pillow==11.0.0
+
+# Database
+# SQLite is included with Python, no additional package needed
+
+# Optional: For production deployment
+# gunicorn==21.2.0
+# whitenoise==6.6.0
+
+# Optional: For PostgreSQL database (if needed in future)
+# psycopg2-binary==2.9.9
+
+# Optional: For environment variables management
+# python-decouple==3.8
+
+# Optional: For email functionality
+# django-anymail==10.3

@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book {{ package.name }}{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="page-header py-4 text-white position-relative" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); overflow: hidden;">
+    <!-- Cosmic Stars Background -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent); background-size: 200px 200px; opacity: 0.4;"></div>
+
+    <div class="container position-relative" style="z-index: 1;">
+        <h1 class="display-6 fw-bold">Book Your Package</h1>
+        <p class="lead mb-0">{{ package.name }}</p>
+    </div>
+</section>
+
+<!-- Booking Form -->
+<section class="py-5" style="background: #0a0a0a;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h5 class="mb-0"><i class="fas fa-user me-2"></i>Booking Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" id="bookingForm">
+                            {% csrf_token %}
+
+                            <h6 class="mb-3 text-white">Personal Details</h6>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Full Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="full_name" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Email <span class="text-danger">*</span></label>
+                                    <input type="email" name="email" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Phone Number <span class="text-danger">*</span></label>
+                                    <input type="tel" name="phone" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Alternate Phone</label>
+                                    <input type="tel" name="alternate_phone" class="form-control">
+                                </div>
+                            </div>
+
+                            <h6 class="mb-3 text-white">Address</h6>
+                            <div class="row g-3 mb-4">
+                                <div class="col-12">
+                                    <label class="form-label text-light">Address <span class="text-danger">*</span></label>
+                                    <textarea name="address" class="form-control" rows="2" required></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label text-light">City <span class="text-danger">*</span></label>
+                                    <input type="text" name="city" class="form-control" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label text-light">State <span class="text-danger">*</span></label>
+                                    <input type="text" name="state" class="form-control" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label text-light">Pincode <span class="text-danger">*</span></label>
+                                    <input type="text" name="pincode" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <h6 class="mb-3 text-white">Travel Details</h6>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Travel Date <span class="text-danger">*</span></label>
+                                    <input type="date" name="travel_date" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Number of People <span class="text-danger">*</span></label>
+                                    <input type="number" name="number_of_people" id="numPeople" class="form-control" min="{{ package.min_people }}" max="{{ package.max_people }}" value="{{ package.min_people }}" required>
+                                    <small class="text-light">Min: {{ package.min_people }}, Max: {{ package.max_people }}</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Number of Adults <span class="text-danger">*</span></label>
+                                    <input type="number" name="number_of_adults" class="form-control" min="1" value="1" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Number of Children</label>
+                                    <input type="number" name="number_of_children" class="form-control" min="0" value="0">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label text-light">Special Requests</label>
+                                    <textarea name="special_requests" class="form-control" rows="3" placeholder="Any dietary restrictions, medical conditions, or special requirements..."></textarea>
+                                </div>
+                            </div>
+
+                            <h6 class="mb-3 text-white">Payment Details</h6>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Total Amount</label>
+                                    <input type="text" id="totalPrice" name="total_price" class="form-control" readonly value="{{ package.price }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-light">Advance Payment</label>
+                                    <input type="number" name="advance_paid" class="form-control" min="0" value="0" step="0.01">
+                                    <small class="text-light">Minimum 20% advance required</small>
+                                </div>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                <label class="form-check-label text-light" for="terms">
+                                    I agree to the <a href="#" target="_blank">Terms & Conditions</a>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="fas fa-check me-2"></i>Confirm Booking
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package Summary Sidebar -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm sticky-top" style="top: 20px; background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-header text-white" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+                        <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>Booking Summary</h6>
+                    </div>
+                    <div class="card-body">
+                        {% if package.featured_image %}<img src="{{ package.featured_image.url }}"{% else %}<img src="https://via.placeholder.com/400x300?text={{ package.name|urlencode }}"{% endif %} class="img-fluid rounded mb-3" alt="{{ package.name }}">
+                        <h5 class="text-white">{{ package.name }}</h5>
+                        <hr>
+                        <ul class="list-unstyled">
+                            <li class="mb-2 text-light">
+                                <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                                {{ package.destination_city }}, {{ package.destination_country }}
+                            </li>
+                            <li class="mb-2 text-light">
+                                <i class="fas fa-clock text-primary me-2"></i>
+                                {{ package.duration_days }} Days / {{ package.duration_nights }} Nights
+                            </li>
+                            {% if package.hotel_type %}
+                            <li class="mb-2 text-light">
+                                <i class="fas fa-hotel text-primary me-2"></i>
+                                {{ package.hotel_type }}
+                            </li>
+                            {% endif %}
+                            {% if package.meal_plan %}
+                            <li class="mb-2 text-light">
+                                <i class="fas fa-utensils text-primary me-2"></i>
+                                {{ package.meal_plan }}
+                            </li>
+                            {% endif %}
+                        </ul>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-2">
+                            <strong class="text-light">Price per person:</strong>
+                            <strong class="text-primary">₹{{ package.price }}</strong>
+                        </div>
+                        {% if package.original_price %}
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-light">Original Price:</span>
+                            <span class="text-muted text-decoration-line-through">₹{{ package.original_price }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-success">You Save:</span>
+                            <span class="text-success">₹{{ package.original_price|add:"-"|add:package.price }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card shadow-sm mt-3" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-body">
+                        <h6 class="text-white"><i class="fas fa-shield-alt me-2 text-success"></i>100% Safe & Secure</h6>
+                        <small class="text-light">Your information is protected with us</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Calculate total price based on number of people
+document.getElementById('numPeople').addEventListener('input', function() {
+    const numPeople = parseInt(this.value) || 1;
+    const pricePerPerson = {{ package.price }};
+    const totalPrice = numPeople * pricePerPerson;
+    document.getElementById('totalPrice').value = totalPrice.toFixed(2);
+});
+</script>
+
+{% endblock %}

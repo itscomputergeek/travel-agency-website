@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Travel Agency{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section / Slider -->
+<section class="hero-section position-relative" style="height: 500px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); overflow: hidden;">
+    <!-- Cosmic Stars Background -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent), radial-gradient(1px 1px at 80% 10%, white, transparent), radial-gradient(2px 2px at 90% 60%, white, transparent); background-size: 200px 200px; opacity: 0.5;"></div>
+
+    <div class="container h-100 position-relative" style="z-index: 1;">
+        <div class="row h-100 align-items-center">
+            <div class="col-lg-6 text-white">
+                <h1 class="display-4 fw-bold mb-3">
+                    {% if site_settings and site_settings.hero_title %}
+                        {{ site_settings.hero_title }}
+                    {% else %}
+                        Explore the World with Us
+                    {% endif %}
+                </h1>
+                <p class="lead mb-4">
+                    {% if site_settings and site_settings.hero_subtitle %}
+                        {{ site_settings.hero_subtitle }}
+                    {% else %}
+                        Discover amazing destinations and create unforgettable memories
+                    {% endif %}
+                </p>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'package_list' %}" class="btn btn-light btn-lg">Explore Packages</a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Section -->
+<section class="search-section py-4" style="background: #0a0a0a;">
+    <div class="container">
+        <div class="card shadow-sm" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+            <div class="card-body">
+                <form method="GET" action="{% url 'package_list' %}" class="row g-3">
+                    <div class="col-md-4">
+                        <input type="text" name="search" class="form-control" placeholder="Search destination...">
+                    </div>
+                    <div class="col-md-3">
+                        <select name="category" class="form-select">
+                            <option value="">All Categories</option>
+                            {% for category in categories %}
+                            <option value="{{ category.slug }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" name="min_price" class="form-control" placeholder="Min Price">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" name="max_price" class="form-control" placeholder="Max Price">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Packages -->
+{% if featured_packages %}
+<section class="featured-packages py-5" style="background: #0a0a0a;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-white">Featured Packages</h2>
+            <p class="text-light">Handpicked destinations for your next adventure</p>
+        </div>
+        <div class="row g-4">
+            {% for package in featured_packages %}
+            <div class="col-lg-3 col-md-6">
+                <div class="card package-card shadow-sm h-100">
+                    <div class="position-relative">
+                        {% if package.featured_image %}<img src="{{ package.featured_image.url }}"{% else %}<img src="https://via.placeholder.com/400x300?text={{ package.name|urlencode }}"{% endif %} class="card-img-top" alt="{{ package.name }}" style="height: 200px; object-fit: cover;">
+                        {% if package.get_discount_percentage > 0 %}
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">{{ package.get_discount_percentage }}% OFF</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ package.name }}</h5>
+                        <p class="text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt"></i> {{ package.destination_city }}
+                            <span class="ms-2"><i class="fas fa-clock"></i> {{ package.duration_days }}D/{{ package.duration_nights }}N</span>
+                        </p>
+                        <p class="card-text small">{{ package.short_description|truncatewords:15 }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div>
+                                <h5 class="text-primary mb-0">₹{{ package.price }}</h5>
+                                {% if package.original_price %}
+                                <small class="text-muted text-decoration-line-through">₹{{ package.original_price }}</small>
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'package_detail' package.slug %}" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'package_list' %}" class="btn btn-outline-primary">View All Packages</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Popular Packages -->
+{% if popular_packages %}
+<section class="popular-packages py-5" style="background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-white">Popular Packages</h2>
+            <p class="text-light">Most loved by our travelers</p>
+        </div>
+        <div class="row g-4">
+            {% for package in popular_packages %}
+            <div class="col-lg-3 col-md-6">
+                <div class="card package-card shadow-sm h-100">
+                    <div class="position-relative">
+                        {% if package.featured_image %}<img src="{{ package.featured_image.url }}"{% else %}<img src="https://via.placeholder.com/400x300?text={{ package.name|urlencode }}"{% endif %} class="card-img-top" alt="{{ package.name }}" style="height: 200px; object-fit: cover;">
+                        {% if package.get_discount_percentage > 0 %}
+                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">{{ package.get_discount_percentage }}% OFF</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ package.name }}</h5>
+                        <p class="text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt"></i> {{ package.destination_city }}
+                            <span class="ms-2"><i class="fas fa-clock"></i> {{ package.duration_days }}D/{{ package.duration_nights }}N</span>
+                        </p>
+                        <p class="card-text small">{{ package.short_description|truncatewords:15 }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div>
+                                <h5 class="text-primary mb-0">₹{{ package.price }}</h5>
+                                {% if package.original_price %}
+                                <small class="text-muted text-decoration-line-through">₹{{ package.original_price }}</small>
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'package_detail' package.slug %}" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Categories -->
+{% if categories %}
+<section class="categories py-5" style="background: #0a0a0a;">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-white">Travel Categories</h2>
+            <p class="text-light">Find your perfect adventure</p>
+        </div>
+        <div class="row g-4">
+            {% for category in categories %}
+            <div class="col-lg-2 col-md-4 col-sm-6">
+                <a href="{% url 'package_list' %}?category={{ category.slug }}" class="text-decoration-none">
+                    <div class="card text-center shadow-sm h-100 category-card">
+                        <div class="card-body">
+                            <i class="fas fa-mountain fa-3x text-primary mb-3"></i>
+                            <h6 class="card-title">{{ category.name }}</h6>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Testimonials -->
+{% if testimonials %}
+<section class="testimonials py-5" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-white">What Our Travelers Say</h2>
+            <p class="text-light">Real experiences from real people</p>
+        </div>
+        <div class="row g-4">
+            {% for testimonial in testimonials %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <span class="text-warning">{{ testimonial.get_star_rating }}</span>
+                        </div>
+                        <h6 class="card-subtitle mb-2">{{ testimonial.title }}</h6>
+                        <p class="card-text small text-muted">{{ testimonial.review|truncatewords:30 }}</p>
+                        <div class="d-flex align-items-center mt-3">
+                            {% if testimonial.customer_photo %}
+                            <img src="{{ testimonial.customer_photo.url }}" class="rounded-circle me-2" width="40" height="40" alt="{{ testimonial.customer_name }}">
+                            {% else %}
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
+                                {{ testimonial.customer_name|first }}
+                            </div>
+                            {% endif %}
+                            <div>
+                                <strong>{{ testimonial.customer_name }}</strong>
+                                <small class="d-block text-muted">{{ testimonial.customer_location }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Call to Action -->
+<section class="cta py-5 text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container text-center">
+        <h2 class="display-6 fw-bold mb-3">Ready to Start Your Journey?</h2>
+        <p class="lead mb-4">Contact us today and let's plan your dream vacation</p>
+        <a href="{% url 'contact' %}" class="btn btn-light btn-lg">Get Started</a>
+    </div>
+</section>
+
+{% endblock %}

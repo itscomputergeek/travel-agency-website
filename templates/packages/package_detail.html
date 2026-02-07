@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ package.name }} - Travel Package{% endblock %}
+
+{% block content %}
+
+<!-- Package Header -->
+<section class="package-header py-4 position-relative" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); overflow: hidden;">
+    <!-- Cosmic Stars Background -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent); background-size: 200px 200px; opacity: 0.4;"></div>
+
+    <div class="container position-relative" style="z-index: 1;">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-light">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'package_list' %}" class="text-light">Packages</a></li>
+                <li class="breadcrumb-item active text-white">{{ package.name }}</li>
+            </ol>
+        </nav>
+        <h1 class="display-5 fw-bold text-white">{{ package.name }}</h1>
+        <p class="lead text-light">
+            <i class="fas fa-map-marker-alt"></i> {{ package.destination_city }}, {{ package.destination_country }}
+            <span class="ms-3"><i class="fas fa-clock"></i> {{ package.duration_days }} Days / {{ package.duration_nights }} Nights</span>
+        </p>
+    </div>
+</section>
+
+<!-- Package Details -->
+<section class="py-5" style="background: #0a0a0a;">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Featured Image -->
+                {% if package.featured_image %}<img src="{{ package.featured_image.url }}"{% else %}<img src="https://via.placeholder.com/800x600?text={{ package.name|urlencode }}"{% endif %} class="img-fluid rounded shadow mb-4" alt="{{ package.name }}">
+
+                <!-- Gallery -->
+                {% if gallery_images %}
+                <div class="row g-2 mb-4">
+                    {% for image in gallery_images %}
+                    <div class="col-3">
+                        <img src="{{ image.image.url }}" class="img-fluid rounded" alt="{{ image.caption }}" style="height: 100px; object-fit: cover; width: 100%;">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Description -->
+                <div class="card shadow-sm mb-4" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Package Overview</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-light">{{ package.description|linebreaks }}</p>
+                    </div>
+                </div>
+
+                <!-- Highlights -->
+                {% if package.highlights %}
+                <div class="card shadow-sm mb-4" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="fas fa-star me-2"></i>Highlights</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="text-light">
+                            {% for highlight in package.get_highlights_list %}
+                            <li>{{ highlight }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Itinerary -->
+                <div class="card shadow-sm mb-4" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-header bg-warning">
+                        <h5 class="mb-0"><i class="fas fa-route me-2"></i>Itinerary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="itinerary-content text-light">
+                            {{ package.itinerary|linebreaks }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inclusions & Exclusions -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card shadow-sm h-100" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                            <div class="card-header bg-success text-white">
+                                <h6 class="mb-0"><i class="fas fa-check-circle me-2"></i>Inclusions</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    {% for inclusion in package.get_inclusions_list %}
+                                    <li class="mb-2 text-light"><i class="fas fa-check text-success me-2"></i>{{ inclusion }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card shadow-sm h-100" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                            <div class="card-header bg-danger text-white">
+                                <h6 class="mb-0"><i class="fas fa-times-circle me-2"></i>Exclusions</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    {% for exclusion in package.get_exclusions_list %}
+                                    <li class="mb-2 text-light"><i class="fas fa-times text-danger me-2"></i>{{ exclusion }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews -->
+                {% if reviews %}
+                <div class="card shadow-sm mb-4" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-comments me-2"></i>Customer Reviews</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for review in reviews %}
+                        <div class="review-item mb-3 pb-3 {% if not forloop.last %}border-bottom{% endif %}">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-light">{{ review.name }}</strong>
+                                <span class="text-warning">{% for i in "12345"|make_list %}{% if forloop.counter <= review.rating %}⭐{% endif %}{% endfor %}</span>
+                            </div>
+                            <p class="mb-0 mt-2 text-light">{{ review.review }}</p>
+                            <small class="text-muted">{{ review.created_at|date:"M d, Y" }}</small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Booking Card -->
+                <div class="card shadow-sm sticky-top" style="top: 20px; background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h2 class="text-primary mb-0">₹{{ package.price }}</h2>
+                            {% if package.original_price %}
+                            <del class="text-muted">₹{{ package.original_price }}</del>
+                            <span class="badge bg-danger ms-2">{{ package.get_discount_percentage }}% OFF</span>
+                            {% endif %}
+                            <p class="text-muted small mb-0">per person</p>
+                        </div>
+
+                        <hr>
+
+                        <!-- Package Details -->
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2 text-light">
+                                <i class="fas fa-clock text-primary me-2"></i>
+                                <strong>Duration:</strong> {{ package.duration_days }}D/{{ package.duration_nights }}N
+                            </li>
+                            {% if package.hotel_type %}
+                            <li class="mb-2 text-light">
+                                <i class="fas fa-hotel text-primary me-2"></i>
+                                <strong>Hotel:</strong> {{ package.hotel_type }}
+                            </li>
+                            {% endif %}
+                            {% if package.meal_plan %}
+                            <li class="mb-2 text-light">
+                                <i class="fas fa-utensils text-primary me-2"></i>
+                                <strong>Meals:</strong> {{ package.meal_plan }}
+                            </li>
+                            {% endif %}
+                            {% if package.transport_mode %}
+                            <li class="mb-2 text-light">
+                                <i class="fas fa-bus text-primary me-2"></i>
+                                <strong>Transport:</strong> {{ package.transport_mode }}
+                            </li>
+                            {% endif %}
+                            <li class="mb-2 text-light">
+                                <i class="fas fa-users text-primary me-2"></i>
+                                <strong>Group Size:</strong> {{ package.min_people }}-{{ package.max_people }} people
+                            </li>
+                        </ul>
+
+                        <a href="{% url 'booking_create' package.slug %}" class="btn btn-primary btn-lg w-100 mb-2">
+                            <i class="fas fa-calendar-check me-2"></i>Book Now
+                        </a>
+                        <a href="{% url 'contact' %}" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-phone me-2"></i>Inquire Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Packages -->
+        {% if related_packages %}
+        <section class="related-packages mt-5">
+            <h3 class="mb-4 text-white">Similar Packages You May Like</h3>
+            <div class="row g-4">
+                {% for related in related_packages %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="card package-card shadow-sm h-100">
+                        {% if related.featured_image %}<img src="{{ related.featured_image.url }}"{% else %}<img src="https://via.placeholder.com/400x300?text={{ related.name|urlencode }}"{% endif %} class="card-img-top" alt="{{ related.name }}" style="height: 180px; object-fit: cover;">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ related.name }}</h6>
+                            <p class="text-muted small mb-2">
+                                <i class="fas fa-map-marker-alt"></i> {{ related.destination_city }}
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="text-primary mb-0">₹{{ related.price }}</h6>
+                                <a href="{% url 'package_detail' related.slug %}" class="btn btn-sm btn-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

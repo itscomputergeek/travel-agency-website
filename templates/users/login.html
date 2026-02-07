@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login - Travel Agency{% endblock %}
+
+{% block content %}
+<section class="login-section py-5" style="min-height: 80vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); position: relative; overflow: hidden;">
+    <!-- Cosmic Background Effect -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent); background-size: 200px 200px; opacity: 0.4;"></div>
+
+    <div class="container position-relative" style="z-index: 1;">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow-lg" style="background: rgba(22, 33, 62, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4 text-white">Welcome Back</h2>
+                        <p class="text-center text-light mb-4">Login to continue your journey</p>
+
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label class="form-label text-light">{{ form.username.label }}</label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="text-danger small">{{ form.username.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-light">{{ form.password.label }}</label>
+                                {{ form.password }}
+                                {% if form.password.errors %}
+                                    <div class="text-danger small">{{ form.password.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="remember">
+                                <label class="form-check-label text-light" for="remember">Remember me</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-100 mb-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login
+                            </button>
+                        </form>
+
+                        <div class="text-center">
+                            <p class="text-light mb-0">Don't have an account?
+                                <a href="{% url 'register' %}" class="text-decoration-none" style="color: #667eea;">Register here</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Travel Packages{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<section class="page-header py-5 text-white position-relative" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); overflow: hidden;">
+    <!-- Cosmic Stars Background -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent); background-size: 200px 200px; opacity: 0.4;"></div>
+
+    <div class="container text-center position-relative" style="z-index: 1;">
+        <h1 class="display-5 fw-bold">Our Travel Packages</h1>
+        <p class="lead">Explore our handpicked destinations</p>
+    </div>
+</section>
+
+<!-- Packages Section -->
+<section class="py-5" style="background: #0a0a0a; min-height: 80vh;">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar Filters -->
+            <div class="col-lg-3">
+                <div class="card shadow-sm mb-4" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Filters</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="GET">
+                            <!-- Search -->
+                            <div class="mb-3">
+                                <label class="form-label text-light">Search</label>
+                                <input type="text" name="search" class="form-control" placeholder="Destination..." value="{{ search_query }}">
+                            </div>
+
+                            <!-- Category -->
+                            <div class="mb-3">
+                                <label class="form-label text-light">Category</label>
+                                <select name="category" class="form-select">
+                                    <option value="">All Categories</option>
+                                    {% for category in categories %}
+                                    <option value="{{ category.slug }}" {% if selected_category == category.slug %}selected{% endif %}>
+                                        {{ category.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Price Range -->
+                            <div class="mb-3">
+                                <label class="form-label text-light">Price Range</label>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <input type="number" name="min_price" class="form-control" placeholder="Min" value="{{ request.GET.min_price }}">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" name="max_price" class="form-control" placeholder="Max" value="{{ request.GET.max_price }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sort By -->
+                            <div class="mb-3">
+                                <label class="form-label text-light">Sort By</label>
+                                <select name="sort" class="form-select">
+                                    <option value="-featured">Featured First</option>
+                                    <option value="price">Price: Low to High</option>
+                                    <option value="-price">Price: High to Low</option>
+                                    <option value="duration_days">Duration: Short to Long</option>
+                                    <option value="-duration_days">Duration: Long to Short</option>
+                                    <option value="-created_at">Newest First</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                            <a href="{% url 'package_list' %}" class="btn btn-outline-secondary w-100 mt-2">Clear Filters</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Packages Grid -->
+            <div class="col-lg-9">
+                {% if packages %}
+                <div class="row g-4">
+                    {% for package in packages %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card package-card shadow-sm h-100">
+                            <div class="position-relative">
+                                {% if package.featured_image %}<img src="{{ package.featured_image.url }}"{% else %}<img src="https://via.placeholder.com/400x300?text={{ package.name|urlencode }}"{% endif %} class="card-img-top" alt="{{ package.name }}" style="height: 200px; object-fit: cover;">
+                                {% if package.featured %}
+                                <span class="badge bg-warning position-absolute top-0 start-0 m-2">Featured</span>
+                                {% endif %}
+                                {% if package.get_discount_percentage > 0 %}
+                                <span class="badge bg-danger position-absolute top-0 end-0 m-2">{{ package.get_discount_percentage }}% OFF</span>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ package.name }}</h5>
+                                <p class="text-muted small mb-2">
+                                    <i class="fas fa-map-marker-alt"></i> {{ package.destination_city }}, {{ package.destination_country }}
+                                </p>
+                                <p class="text-muted small mb-2">
+                                    <i class="fas fa-clock"></i> {{ package.duration_days }} Days / {{ package.duration_nights }} Nights
+                                </p>
+                                <p class="card-text small">{{ package.short_description|truncatewords:15 }}</p>
+
+                                <!-- Features -->
+                                <div class="small text-muted mb-3">
+                                    {% if package.hotel_type %}
+                                    <span class="badge bg-light text-dark me-1"><i class="fas fa-hotel"></i> {{ package.hotel_type }}</span>
+                                    {% endif %}
+                                    {% if package.meal_plan %}
+                                    <span class="badge bg-light text-dark me-1"><i class="fas fa-utensils"></i> {{ package.meal_plan }}</span>
+                                    {% endif %}
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div>
+                                        <h5 class="text-primary mb-0">₹{{ package.price }}</h5>
+                                        {% if package.original_price %}
+                                        <small class="text-muted text-decoration-line-through">₹{{ package.original_price }}</small>
+                                        {% endif %}
+                                        <small class="d-block text-muted">per person</small>
+                                    </div>
+                                    <a href="{% url 'package_detail' package.slug %}" class="btn btn-sm btn-primary">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if packages.has_other_pages %}
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if packages.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ packages.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}">Previous</a>
+                        </li>
+                        {% endif %}
+
+                        {% for num in packages.paginator.page_range %}
+                        <li class="page-item {% if packages.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+
+                        {% if packages.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ packages.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}">Next</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-search fa-4x text-muted mb-3"></i>
+                    <h4 class="text-white">No packages found</h4>
+                    <p class="text-light">Try adjusting your search filters</p>
+                    <a href="{% url 'package_list' %}" class="btn btn-primary">View All Packages</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

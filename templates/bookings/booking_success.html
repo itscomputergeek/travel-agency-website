@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Confirmed{% endblock %}
+
+{% block content %}
+
+<section class="py-5 position-relative" style="min-height: 80vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); overflow: hidden;">
+    <!-- Cosmic Background Effect -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent); background-size: 200px 200px; opacity: 0.4;"></div>
+
+    <div class="container position-relative" style="z-index: 1;">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
+                    <div class="card-body text-center py-5">
+                        <div class="mb-4">
+                            <i class="fas fa-check-circle text-success" style="font-size: 80px;"></i>
+                        </div>
+                        <h1 class="display-5 fw-bold text-success mb-3">Booking Confirmed!</h1>
+                        <p class="lead mb-4 text-light">Thank you for booking with us. Your booking has been received successfully.</p>
+
+                        <div class="alert alert-info">
+                            <h5><i class="fas fa-id-card me-2"></i>Your Booking ID: <strong>{{ booking.booking_id }}</strong></h5>
+                            <p class="mb-0">Please save this ID for future reference</p>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Booking Details -->
+                        <div class="text-start">
+                            <h5 class="mb-3 text-white">Booking Details</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <strong class="text-light">Package:</strong><br>
+                                    <span class="text-light">{{ booking.package.name }}</span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong class="text-light">Destination:</strong><br>
+                                    <span class="text-light">{{ booking.package.destination_city }}, {{ booking.package.destination_country }}</span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong class="text-light">Customer Name:</strong><br>
+                                    <span class="text-light">{{ booking.full_name }}</span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong class="text-light">Email:</strong><br>
+                                    <span class="text-light">{{ booking.email }}</span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong class="text-light">Phone:</strong><br>
+                                    <span class="text-light">{{ booking.phone }}</span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong class="text-light">Travel Date:</strong><br>
+                                    <span class="text-light">{{ booking.travel_date|date:"F d, Y" }}</span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong class="text-light">Number of People:</strong><br>
+                                    <span class="text-light">{{ booking.number_of_people }} ({{ booking.number_of_adults }} Adults, {{ booking.number_of_children }} Children)</span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong class="text-light">Total Amount:</strong><br>
+                                    <span class="text-primary fw-bold">₹{{ booking.total_price }}</span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong class="text-light">Advance Paid:</strong><br>
+                                    <span class="text-light">₹{{ booking.advance_paid }}</span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong class="text-light">Balance Amount:</strong><br>
+                                    <span class="text-danger fw-bold">₹{{ booking.balance_amount }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="alert alert-warning">
+                            <h6><i class="fas fa-info-circle me-2"></i>What's Next?</h6>
+                            <ul class="text-start mb-0">
+                                <li>A confirmation email has been sent to {{ booking.email }}</li>
+                                <li>Our team will contact you within 24 hours</li>
+                                <li>Please keep your Booking ID for future reference</li>
+                                <li>Complete the balance payment before your travel date</li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-4">
+                            <a href="{% url 'home' %}" class="btn btn-primary me-2">
+                                <i class="fas fa-home me-2"></i>Back to Home
+                            </a>
+                            <a href="{% url 'package_list' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-search me-2"></i>Browse More Packages
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
