@@ -5,34 +5,364 @@
 
 {% block content %}
 
-<!-- Hero Section / Slider -->
-<section class="hero-section position-relative" style="height: 500px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); overflow: hidden;">
-    <!-- Cosmic Stars Background -->
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20% 30%, white, transparent), radial-gradient(2px 2px at 60% 70%, white, transparent), radial-gradient(1px 1px at 50% 50%, white, transparent), radial-gradient(1px 1px at 80% 10%, white, transparent), radial-gradient(2px 2px at 90% 60%, white, transparent); background-size: 200px 200px; opacity: 0.5;"></div>
+<style>
+/* Cosmic Background with Milky Way */
+.cosmic-hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    overflow: hidden;
+}
 
-    <div class="container h-100 position-relative" style="z-index: 1;">
-        <div class="row h-100 align-items-center">
-            <div class="col-lg-6 text-white">
-                <h1 class="display-4 fw-bold mb-3">
-                    {% if site_settings and site_settings.hero_title %}
-                        {{ site_settings.hero_title }}
-                    {% else %}
-                        Explore the World with Us
-                    {% endif %}
-                </h1>
-                <p class="lead mb-4">
-                    {% if site_settings and site_settings.hero_subtitle %}
-                        {{ site_settings.hero_subtitle }}
-                    {% else %}
-                        Discover amazing destinations and create unforgettable memories
-                    {% endif %}
-                </p>
-                <div class="d-flex gap-2">
-                    <a href="{% url 'package_list' %}" class="btn btn-light btn-lg">Explore Packages</a>
-                    <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
-                </div>
+/* Milky Way Effect */
+.milky-way {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(ellipse at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(102, 126, 234, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 40% 40%, rgba(138, 118, 195, 0.15) 0%, transparent 50%);
+    animation: milkyRotate 120s linear infinite;
+}
+
+@keyframes milkyRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Stars Background - Multiple Layers */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20% 30%, white, transparent),
+        radial-gradient(2px 2px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, white, transparent),
+        radial-gradient(2px 2px at 90% 60%, white, transparent),
+        radial-gradient(1px 1px at 33% 75%, white, transparent),
+        radial-gradient(2px 2px at 79% 53%, white, transparent);
+    background-size: 200px 200px, 250px 250px, 300px 300px;
+    background-position: 0 0, 40px 60px, 130px 270px;
+    animation: twinkle 3s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Shooting Stars */
+.shooting-star {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, #fff, transparent);
+    animation: shoot 3s linear infinite;
+    box-shadow: 0 0 4px 2px rgba(255, 255, 255, 0.5);
+}
+
+.shooting-star::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 80px;
+    background: linear-gradient(90deg, transparent, #fff, transparent);
+}
+
+.shooting-star:nth-child(1) {
+    top: 10%;
+    left: 10%;
+    width: 100px;
+    animation-delay: 0s;
+    animation-duration: 2s;
+}
+
+.shooting-star:nth-child(2) {
+    top: 30%;
+    left: 60%;
+    width: 80px;
+    animation-delay: 1s;
+    animation-duration: 2.5s;
+}
+
+.shooting-star:nth-child(3) {
+    top: 50%;
+    left: 20%;
+    width: 90px;
+    animation-delay: 2s;
+    animation-duration: 1.8s;
+}
+
+.shooting-star:nth-child(4) {
+    top: 70%;
+    left: 70%;
+    width: 120px;
+    animation-delay: 0.5s;
+    animation-duration: 2.2s;
+}
+
+.shooting-star:nth-child(5) {
+    top: 20%;
+    left: 80%;
+    width: 95px;
+    animation-delay: 1.5s;
+    animation-duration: 2.8s;
+}
+
+@keyframes shoot {
+    0% {
+        transform: translateX(0) translateY(0) rotate(-45deg);
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(1000px) translateY(500px) rotate(-45deg);
+        opacity: 0;
+    }
+}
+
+/* Solar System Planets */
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 20s ease-in-out infinite;
+}
+
+.planet-1 {
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 30% 30%, #ff6b35, #8B0000);
+    top: 15%;
+    right: 10%;
+    box-shadow: 0 0 40px rgba(255, 107, 53, 0.6);
+    animation-duration: 15s;
+}
+
+.planet-2 {
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle at 40% 40%, #4A90E2, #1a5490);
+    bottom: 20%;
+    left: 8%;
+    box-shadow: 0 0 50px rgba(74, 144, 226, 0.6);
+    animation-duration: 25s;
+}
+
+.planet-3 {
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle at 35% 35%, #E94B3C, #8B1A1A);
+    top: 60%;
+    right: 15%;
+    box-shadow: 0 0 30px rgba(233, 75, 60, 0.5);
+    animation-duration: 18s;
+}
+
+/* Saturn with Ring */
+.saturn {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle at 40% 40%, #F4D03F, #D4A02F);
+    top: 40%;
+    left: 5%;
+    box-shadow: 0 0 60px rgba(244, 208, 63, 0.6);
+    animation-duration: 30s;
+}
+
+.saturn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotateX(75deg);
+    width: 140px;
+    height: 140px;
+    border: 3px solid rgba(244, 208, 63, 0.4);
+    border-radius: 50%;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-30px) rotate(5deg);
+    }
+}
+
+/* Nebula Clouds */
+.nebula {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.3;
+    animation: nebulaDrift 40s ease-in-out infinite;
+}
+
+.nebula-1 {
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.4) 0%, transparent 70%);
+    top: 10%;
+    right: 20%;
+}
+
+.nebula-2 {
+    background: radial-gradient(circle, rgba(0, 191, 255, 0.3) 0%, transparent 70%);
+    bottom: 15%;
+    left: 15%;
+    animation-delay: 5s;
+}
+
+@keyframes nebulaDrift {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(50px, -30px) scale(1.1);
+    }
+}
+
+/* Content Styling */
+.hero-content {
+    position: relative;
+    z-index: 10;
+    color: white;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 20px rgba(102, 126, 234, 0.5), 0 0 30px rgba(102, 126, 234, 0.3);
+    }
+    to {
+        text-shadow: 0 0 30px rgba(102, 126, 234, 0.8), 0 0 40px rgba(102, 126, 234, 0.5);
+    }
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.cosmic-btn {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(102, 126, 234, 0.2);
+    backdrop-filter: blur(10px);
+    color: white;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.cosmic-btn:hover {
+    background: rgba(102, 126, 234, 0.5);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    color: white;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-20px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+</style>
+
+<!-- Cosmic Hero Section -->
+<section class="cosmic-hero">
+    <!-- Milky Way -->
+    <div class="milky-way"></div>
+
+    <!-- Stars -->
+    <div class="stars"></div>
+
+    <!-- Nebula Clouds -->
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+
+    <!-- Shooting Stars -->
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+
+    <!-- Planets -->
+    <div class="planet planet-1"></div>
+    <div class="planet planet-2"></div>
+    <div class="planet planet-3"></div>
+    <div class="planet saturn"></div>
+
+    <!-- Hero Content -->
+    <div class="container h-100 d-flex align-items-center justify-content-center">
+        <div class="hero-content">
+            <h1 class="animate__animated animate__fadeInDown">
+                {% if site_settings and site_settings.hero_title %}
+                    {{ site_settings.hero_title }}
+                {% else %}
+                    Explore the World with Us
+                {% endif %}
+            </h1>
+            <p class="animate__animated animate__fadeInUp">
+                {% if site_settings and site_settings.hero_subtitle %}
+                    {{ site_settings.hero_subtitle }}
+                {% else %}
+                    Discover amazing destinations and create unforgettable memories
+                {% endif %}
+            </p>
+            <div class="animate__animated animate__fadeInUp animate__delay-1s">
+                <a href="{% url 'package_list' %}" class="cosmic-btn">Explore Packages</a>
+                <a href="{% url 'contact' %}" class="cosmic-btn">Contact Us</a>
             </div>
         </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <i class="fas fa-chevron-down fa-2x text-white"></i>
     </div>
 </section>
 
