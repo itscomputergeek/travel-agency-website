@@ -11,4 +11,4 @@ python manage.py migrate
 python manage.py create_superuser_if_none
 
 # Import packages if needed
-# python manage.py import_packages
+python manage.py import_packages
