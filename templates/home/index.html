@@ -6,464 +6,146 @@
 {% block content %}
 
 <style>
-/* Enhanced Cosmic Background with Vibrant Milky Way */
-.cosmic-hero {
+/* Video Hero Section */
+.video-hero {
     position: relative;
     height: 100vh;
     min-height: 700px;
-    background: linear-gradient(to bottom,
-        #0a0e27 0%,
-        #1a1438 25%,
-        #2d1b4e 50%,
-        #1a1438 75%,
-        #0a0e27 100%);
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Vibrant Milky Way with Purple, Pink, Blue */
-.milky-way {
+/* Background Video */
+.video-background {
     position: absolute;
-    top: -10%;
-    left: -10%;
-    width: 120%;
-    height: 120%;
-    background:
-        radial-gradient(ellipse at 30% 20%, rgba(147, 51, 234, 0.4) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 30%, rgba(236, 72, 153, 0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 40%, rgba(59, 130, 246, 0.4) 0%, transparent 60%),
-        radial-gradient(ellipse at 40% 60%, rgba(168, 85, 247, 0.35) 0%, transparent 55%),
-        radial-gradient(ellipse at 60% 70%, rgba(219, 39, 119, 0.3) 0%, transparent 50%);
-    animation: milkyRotate 180s linear infinite;
-    filter: blur(1px);
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    object-fit: cover;
 }
 
-@keyframes milkyRotate {
-    0% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(180deg) scale(1.1); }
-    100% { transform: rotate(360deg) scale(1); }
-}
-
-/* Multiple Star Layers - Twinkling */
-.stars-layer-1,
-.stars-layer-2,
-.stars-layer-3 {
+/* Dark Overlay for Better Text Readability */
+.video-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
+    z-index: 1;
 }
 
-.stars-layer-1 {
-    background-image:
-        radial-gradient(2px 2px at 20% 30%, white, transparent),
-        radial-gradient(2px 2px at 60% 70%, white, transparent),
-        radial-gradient(1px 1px at 50% 50%, white, transparent),
-        radial-gradient(1px 1px at 80% 10%, white, transparent),
-        radial-gradient(2px 2px at 90% 60%, white, transparent),
-        radial-gradient(1px 1px at 33% 75%, white, transparent),
-        radial-gradient(2px 2px at 79% 53%, white, transparent),
-        radial-gradient(1px 1px at 15% 85%, white, transparent);
-    background-size: 200px 200px;
-    animation: twinkle1 3s ease-in-out infinite alternate;
-}
-
-.stars-layer-2 {
-    background-image:
-        radial-gradient(1px 1px at 10% 20%, rgba(147, 197, 253, 0.8), transparent),
-        radial-gradient(2px 2px at 40% 40%, rgba(196, 181, 253, 0.8), transparent),
-        radial-gradient(1px 1px at 70% 60%, rgba(251, 207, 232, 0.8), transparent),
-        radial-gradient(2px 2px at 25% 80%, rgba(147, 197, 253, 0.8), transparent);
-    background-size: 250px 250px;
-    animation: twinkle2 4s ease-in-out infinite alternate;
-}
-
-.stars-layer-3 {
-    background-image:
-        radial-gradient(3px 3px at 50% 15%, rgba(255, 255, 255, 0.9), transparent),
-        radial-gradient(2px 2px at 85% 45%, rgba(255, 255, 255, 0.9), transparent),
-        radial-gradient(3px 3px at 30% 90%, rgba(255, 255, 255, 0.9), transparent);
-    background-size: 300px 300px;
-    animation: twinkle3 5s ease-in-out infinite alternate;
-}
-
-@keyframes twinkle1 {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
-}
-
-@keyframes twinkle2 {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 0.9; }
-}
-
-@keyframes twinkle3 {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-}
-
-/* Enhanced Shooting Stars */
-.shooting-star {
-    position: absolute;
-    height: 3px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-    border-radius: 50%;
-    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
-}
-
-.shooting-star:nth-child(1) {
-    top: 15%;
-    left: 10%;
-    width: 150px;
-    animation: shoot1 3s linear infinite;
-}
-
-.shooting-star:nth-child(2) {
-    top: 25%;
-    left: 70%;
-    width: 120px;
-    animation: shoot2 4s linear infinite;
-    animation-delay: 1s;
-}
-
-.shooting-star:nth-child(3) {
-    top: 45%;
-    left: 30%;
-    width: 100px;
-    animation: shoot3 3.5s linear infinite;
-    animation-delay: 2s;
-}
-
-.shooting-star:nth-child(4) {
-    top: 65%;
-    left: 80%;
-    width: 130px;
-    animation: shoot4 3.2s linear infinite;
-    animation-delay: 0.5s;
-}
-
-.shooting-star:nth-child(5) {
-    top: 35%;
-    left: 50%;
-    width: 110px;
-    animation: shoot5 3.8s linear infinite;
-    animation-delay: 1.5s;
-}
-
-.shooting-star:nth-child(6) {
-    top: 55%;
-    left: 15%;
-    width: 140px;
-    animation: shoot6 3.3s linear infinite;
-    animation-delay: 2.5s;
-}
-
-@keyframes shoot1 {
-    0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 1; }
-    70% { opacity: 1; }
-    100% { transform: translateX(1000px) translateY(500px) rotate(-45deg); opacity: 0; }
-}
-
-@keyframes shoot2 {
-    0% { transform: translateX(0) translateY(0) rotate(-50deg); opacity: 1; }
-    70% { opacity: 1; }
-    100% { transform: translateX(-800px) translateY(600px) rotate(-50deg); opacity: 0; }
-}
-
-@keyframes shoot3 {
-    0% { transform: translateX(0) translateY(0) rotate(-40deg); opacity: 1; }
-    70% { opacity: 1; }
-    100% { transform: translateX(900px) translateY(450px) rotate(-40deg); opacity: 0; }
-}
-
-@keyframes shoot4 {
-    0% { transform: translateX(0) translateY(0) rotate(-55deg); opacity: 1; }
-    70% { opacity: 1; }
-    100% { transform: translateX(-700px) translateY(550px) rotate(-55deg); opacity: 0; }
-}
-
-@keyframes shoot5 {
-    0% { transform: translateX(0) translateY(0) rotate(-48deg); opacity: 1; }
-    70% { opacity: 1; }
-    100% { transform: translateX(1100px) translateY(600px) rotate(-48deg); opacity: 0; }
-}
-
-@keyframes shoot6 {
-    0% { transform: translateX(0) translateY(0) rotate(-42deg); opacity: 1; }
-    70% { opacity: 1; }
-    100% { transform: translateX(950px) translateY(520px) rotate(-42deg); opacity: 0; }
-}
-
-/* Vibrant Nebula Clouds */
-.nebula {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.4;
-    animation: nebulaDrift 50s ease-in-out infinite;
-}
-
-.nebula-1 {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(147, 51, 234, 0.6) 0%, rgba(126, 34, 206, 0.4) 40%, transparent 70%);
-    top: 5%;
-    right: 15%;
-}
-
-.nebula-2 {
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(236, 72, 153, 0.5) 0%, rgba(219, 39, 119, 0.3) 40%, transparent 70%);
-    bottom: 10%;
-    left: 10%;
-    animation-delay: 5s;
-}
-
-.nebula-3 {
-    width: 450px;
-    height: 450px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.5) 0%, rgba(37, 99, 235, 0.3) 40%, transparent 70%);
-    top: 40%;
-    right: 30%;
-    animation-delay: 10s;
-}
-
-.nebula-4 {
-    width: 550px;
-    height: 550px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, rgba(147, 51, 234, 0.3) 40%, transparent 70%);
-    bottom: 30%;
-    right: 20%;
-    animation-delay: 15s;
-}
-
-@keyframes nebulaDrift {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-    }
-    25% {
-        transform: translate(50px, -30px) scale(1.1);
-    }
-    50% {
-        transform: translate(30px, 40px) scale(0.95);
-    }
-    75% {
-        transform: translate(-40px, -20px) scale(1.05);
-    }
-}
-
-/* Enhanced Planets */
-.planet {
-    position: absolute;
-    border-radius: 50%;
-    animation: float 25s ease-in-out infinite;
-}
-
-.planet-1 {
-    width: 80px;
-    height: 80px;
-    background: radial-gradient(circle at 35% 35%, #ff9966, #ff5722);
-    top: 12%;
-    right: 8%;
-    box-shadow:
-        0 0 60px rgba(255, 87, 34, 0.8),
-        inset -10px -10px 20px rgba(0, 0, 0, 0.3);
-    animation-duration: 20s;
-}
-
-.planet-2 {
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle at 40% 40%, #60a5fa, #2563eb);
-    bottom: 18%;
-    left: 6%;
-    box-shadow:
-        0 0 80px rgba(59, 130, 246, 0.8),
-        inset -15px -15px 30px rgba(0, 0, 0, 0.4);
-    animation-duration: 30s;
-}
-
-.planet-3 {
-    width: 65px;
-    height: 65px;
-    background: radial-gradient(circle at 38% 38%, #fb7185, #e11d48);
-    top: 58%;
-    right: 12%;
-    box-shadow:
-        0 0 50px rgba(251, 113, 133, 0.7),
-        inset -8px -8px 15px rgba(0, 0, 0, 0.3);
-    animation-duration: 22s;
-}
-
-/* Saturn with Enhanced Ring */
-.saturn {
-    width: 120px;
-    height: 120px;
-    background: radial-gradient(circle at 42% 42%, #fcd34d, #f59e0b);
-    top: 38%;
-    left: 4%;
-    box-shadow:
-        0 0 100px rgba(252, 211, 77, 0.8),
-        inset -18px -18px 35px rgba(0, 0, 0, 0.4);
-    animation-duration: 35s;
-}
-
-.saturn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotateX(75deg);
-    width: 180px;
-    height: 180px;
-    border: 4px solid rgba(252, 211, 77, 0.5);
-    border-radius: 50%;
-    box-shadow:
-        inset 0 0 20px rgba(252, 211, 77, 0.3),
-        0 0 20px rgba(252, 211, 77, 0.3);
-}
-
-.saturn::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotateX(75deg);
-    width: 160px;
-    height: 160px;
-    border: 3px solid rgba(217, 119, 6, 0.4);
-    border-radius: 50%;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    25% {
-        transform: translateY(-40px) rotate(5deg);
-    }
-    50% {
-        transform: translateY(-20px) rotate(-3deg);
-    }
-    75% {
-        transform: translateY(-35px) rotate(3deg);
-    }
-}
-
-/* Glowing Particles */
-.particles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-.particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
-    border-radius: 50%;
-    animation: particleFloat 15s infinite;
-}
-
-.particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-.particle:nth-child(2) { left: 20%; animation-delay: 2s; }
-.particle:nth-child(3) { left: 30%; animation-delay: 4s; }
-.particle:nth-child(4) { left: 40%; animation-delay: 1s; }
-.particle:nth-child(5) { left: 50%; animation-delay: 3s; }
-.particle:nth-child(6) { left: 60%; animation-delay: 5s; }
-.particle:nth-child(7) { left: 70%; animation-delay: 2.5s; }
-.particle:nth-child(8) { left: 80%; animation-delay: 4.5s; }
-.particle:nth-child(9) { left: 90%; animation-delay: 1.5s; }
-
-@keyframes particleFloat {
-    0% {
-        bottom: -10px;
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    100% {
-        bottom: 100%;
-        opacity: 0;
-    }
-}
-
-/* Content Styling */
+/* Hero Content */
 .hero-content {
     position: relative;
-    z-index: 10;
-    color: white;
+    z-index: 2;
     text-align: center;
-    padding: 0 20px;
+    color: white;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: fadeInUp 1.2s ease-out;
 }
 
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Main Heading */
 .hero-content h1 {
     font-size: 4rem;
     font-weight: 800;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, #fff 0%, #a78bfa 50%, #ec4899 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: titleGlow 3s ease-in-out infinite alternate;
-    filter: drop-shadow(0 0 20px rgba(168, 139, 250, 0.5));
+    margin-bottom: 20px;
+    text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.8);
+    line-height: 1.2;
+    letter-spacing: -1px;
 }
 
-@keyframes titleGlow {
-    from {
-        filter: drop-shadow(0 0 20px rgba(168, 139, 250, 0.5));
-    }
-    to {
-        filter: drop-shadow(0 0 40px rgba(236, 72, 153, 0.8));
-    }
-}
-
+/* Subtitle */
 .hero-content p {
     font-size: 1.5rem;
-    margin-bottom: 2rem;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.7);
-    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 40px;
+    font-weight: 300;
+    text-shadow: 1px 2px 8px rgba(0, 0, 0, 0.8);
+    line-height: 1.6;
 }
 
-.cosmic-btn {
-    padding: 15px 40px;
+/* CTA Buttons */
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-hero {
+    padding: 18px 45px;
     font-size: 1.1rem;
     font-weight: 600;
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    background: linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(236, 72, 153, 0.3));
-    backdrop-filter: blur(10px);
-    color: white;
     border-radius: 50px;
-    transition: all 0.4s ease;
     text-decoration: none;
+    transition: all 0.3s ease;
     display: inline-block;
-    margin: 0 10px;
-    box-shadow: 0 8px 32px rgba(147, 51, 234, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-.cosmic-btn:hover {
-    background: linear-gradient(135deg, rgba(147, 51, 234, 0.6), rgba(236, 72, 153, 0.6));
-    border-color: rgba(255, 255, 255, 0.8);
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(236, 72, 153, 0.5);
+.btn-primary-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+.btn-primary-hero:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
     color: white;
 }
 
-/* Scroll Indicator */
+.btn-secondary-hero {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary-hero:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+/* Scroll Down Indicator */
 .scroll-indicator {
     position: absolute;
-    bottom: 30px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 2;
     animation: bounce 2s infinite;
-    filter: drop-shadow(0 0 10px rgba(168, 139, 250, 0.8));
 }
 
 @keyframes bounce {
@@ -471,293 +153,279 @@
         transform: translateX(-50%) translateY(0);
     }
     40% {
-        transform: translateX(-50%) translateY(-20px);
+        transform: translateX(-50%) translateY(-10px);
     }
     60% {
-        transform: translateX(-50%) translateY(-10px);
+        transform: translateX(-50%) translateY(-5px);
     }
 }
 
-/* Responsive */
+.scroll-indicator i {
+    color: white;
+    font-size: 2rem;
+    opacity: 0.8;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .hero-content h1 {
         font-size: 2.5rem;
     }
+
     .hero-content p {
         font-size: 1.2rem;
     }
-    .planet-1, .planet-2, .planet-3 { display: none; }
-    .saturn { width: 80px; height: 80px; }
+
+    .btn-hero {
+        padding: 15px 35px;
+        font-size: 1rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+}
+
+/* Features Section */
+.features-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.feature-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.feature-icon {
+    font-size: 3.5rem;
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.6;
 }
 </style>
 
-<!-- Cosmic Hero Section -->
-<section class="cosmic-hero">
-    <!-- Vibrant Milky Way -->
-    <div class="milky-way"></div>
+<!-- Video Hero Section -->
+<section class="video-hero">
+    <!-- HD Video Background - Mountain Trekking -->
+    <video class="video-background" autoplay muted loop playsinline>
+        <!-- Primary: Mountain hiking/trekking scene -->
+        <source src="https://videos.pexels.com/video-files/4825173/4825173-uhd_2560_1440_25fps.mp4" type="video/mp4">
+        <!-- Fallback: Scenic mountain landscape -->
+        <source src="https://videos.pexels.com/video-files/2611250/2611250-uhd_2560_1440_30fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-    <!-- Multiple Star Layers -->
-    <div class="stars-layer-1"></div>
-    <div class="stars-layer-2"></div>
-    <div class="stars-layer-3"></div>
-
-    <!-- Vibrant Nebula Clouds -->
-    <div class="nebula nebula-1"></div>
-    <div class="nebula nebula-2"></div>
-    <div class="nebula nebula-3"></div>
-    <div class="nebula nebula-4"></div>
-
-    <!-- Shooting Stars -->
-    <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
-
-    <!-- Floating Particles -->
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-
-    <!-- Planets -->
-    <div class="planet planet-1"></div>
-    <div class="planet planet-2"></div>
-    <div class="planet planet-3"></div>
-    <div class="planet saturn"></div>
+    <!-- Dark Overlay -->
+    <div class="video-overlay"></div>
 
     <!-- Hero Content -->
-    <div class="container h-100 d-flex align-items-center justify-content-center">
-        <div class="hero-content">
-            <h1 class="animate__animated animate__fadeInDown">
-                {% if site_settings and site_settings.hero_title %}
-                    {{ site_settings.hero_title }}
-                {% else %}
-                    Explore the World with Us
-                {% endif %}
-            </h1>
-            <p class="animate__animated animate__fadeInUp">
-                {% if site_settings and site_settings.hero_subtitle %}
-                    {{ site_settings.hero_subtitle }}
-                {% else %}
-                    Discover amazing destinations and create unforgettable memories
-                {% endif %}
-            </p>
-            <div class="animate__animated animate__fadeInUp animate__delay-1s">
-                <a href="{% url 'package_list' %}" class="cosmic-btn">Explore Packages</a>
-                <a href="{% url 'contact' %}" class="cosmic-btn">Contact Us</a>
-            </div>
+    <div class="hero-content">
+        <h1>Embark on New Adventure</h1>
+        <p>Discover hidden gems, embrace new cultures, and create unforgettable memories across breathtaking destinations.</p>
+
+        <div class="cta-buttons">
+            <a href="{% url 'packages:package_list' %}" class="btn-hero btn-primary-hero">
+                <i class="fas fa-compass me-2"></i>Explore Packages
+            </a>
+            <a href="#features" class="btn-hero btn-secondary-hero">
+                <i class="fas fa-info-circle me-2"></i>Learn More
+            </a>
         </div>
     </div>
 
-    <!-- Scroll Indicator -->
+    <!-- Scroll Down Indicator -->
     <div class="scroll-indicator">
-        <i class="fas fa-chevron-down fa-2x text-white"></i>
+        <i class="fas fa-chevron-down"></i>
     </div>
 </section>
 
-<!-- Search Section -->
-<section class="search-section py-4" style="background: #0a0a0a;">
+<!-- Features Section -->
+<section id="features" class="features-section">
     <div class="container">
-        <div class="card shadow-sm" style="background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(102, 126, 234, 0.3);">
-            <div class="card-body">
-                <form method="GET" action="{% url 'package_list' %}" class="row g-3">
-                    <div class="col-md-4">
-                        <input type="text" name="search" class="form-control" placeholder="Search destination...">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-4 fw-bold mb-3">Why Choose Us</h2>
+                <p class="lead text-muted">Your journey to extraordinary experiences starts here</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mountain"></i>
                     </div>
-                    <div class="col-md-3">
-                        <select name="category" class="form-select">
-                            <option value="">All Categories</option>
-                            {% for category in categories %}
-                            <option value="{{ category.slug }}">{{ category.name }}</option>
-                            {% endfor %}
-                        </select>
+                    <h3>Curated Destinations</h3>
+                    <p>Handpicked locations offering the perfect blend of adventure, culture, and natural beauty.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
                     </div>
-                    <div class="col-md-2">
-                        <input type="number" name="min_price" class="form-control" placeholder="Min Price">
+                    <h3>Expert Guides</h3>
+                    <p>Local professionals who bring destinations to life with their knowledge and passion.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
                     </div>
-                    <div class="col-md-2">
-                        <input type="number" name="max_price" class="form-control" placeholder="Max Price">
+                    <h3>Safe & Secure</h3>
+                    <p>Your safety is our priority with comprehensive insurance and 24/7 support.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tag"></i>
                     </div>
-                    <div class="col-md-1">
-                        <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search"></i></button>
+                    <h3>Best Prices</h3>
+                    <p>Competitive rates and exclusive deals ensuring value for every adventure.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
                     </div>
-                </form>
+                    <h3>Personalized Service</h3>
+                    <p>Tailored itineraries designed to match your preferences and travel style.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Memorable Experiences</h3>
+                    <p>Create lifelong memories with unique activities and authentic local experiences.</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Featured Packages -->
-{% if featured_packages %}
-<section class="featured-packages py-5" style="background: #0a0a0a;">
+<!-- Featured Packages Section -->
+<section class="py-5 bg-white">
     <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-6 fw-bold text-white">Featured Packages</h2>
-            <p class="text-light">Handpicked destinations for your next adventure</p>
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-4 fw-bold mb-3">Featured Destinations</h2>
+                <p class="lead text-muted">Explore our most popular travel packages</p>
+            </div>
         </div>
+
         <div class="row g-4">
             {% for package in featured_packages %}
-            <div class="col-lg-3 col-md-6">
-                <div class="card package-card shadow-sm h-100">
-                    <div class="position-relative">
-                        {% if package.featured_image %}<img src="{{ package.featured_image.url }}"{% else %}<img src="https://via.placeholder.com/400x300?text={{ package.name|urlencode }}"{% endif %} class="card-img-top" alt="{{ package.name }}" style="height: 200px; object-fit: cover;">
-                        {% if package.get_discount_percentage > 0 %}
-                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">{{ package.get_discount_percentage }}% OFF</span>
-                        {% endif %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0" style="overflow: hidden; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                    {% if package.featured_image %}
+                    <img src="{{ package.featured_image.url }}" class="card-img-top" alt="{{ package.name }}" style="height: 250px; object-fit: cover;">
+                    {% else %}
+                    <div class="bg-gradient p-5 text-center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 250px;">
+                        <i class="fas fa-image text-white" style="font-size: 4rem; margin-top: 50px;"></i>
                     </div>
+                    {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">{{ package.name }}</h5>
-                        <p class="text-muted small mb-2">
-                            <i class="fas fa-map-marker-alt"></i> {{ package.destination_city }}
-                            <span class="ms-2"><i class="fas fa-clock"></i> {{ package.duration_days }}D/{{ package.duration_nights }}N</span>
-                        </p>
-                        <p class="card-text small">{{ package.short_description|truncatewords:15 }}</p>
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <div>
-                                <h5 class="text-primary mb-0">₹{{ package.price }}</h5>
-                                {% if package.original_price %}
-                                <small class="text-muted text-decoration-line-through">₹{{ package.original_price }}</small>
-                                {% endif %}
-                            </div>
-                            <a href="{% url 'package_detail' package.slug %}" class="btn btn-sm btn-primary">View Details</a>
+                        <h5 class="card-title fw-bold">{{ package.name }}</h5>
+                        <p class="card-text text-muted">{{ package.short_description|truncatewords:15 }}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-primary fw-bold fs-5">₹{{ package.price }}</span>
+                            <span class="text-muted"><i class="far fa-clock me-1"></i>{{ package.duration_days }}D/{{ package.duration_nights }}N</span>
                         </div>
+                        <a href="{% url 'packages:package_detail' package.slug %}" class="btn btn-outline-primary w-100">View Details</a>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
-        <div class="text-center mt-4">
-            <a href="{% url 'package_list' %}" class="btn btn-outline-primary">View All Packages</a>
-        </div>
-    </div>
-</section>
-{% endif %}
 
-<!-- Popular Packages -->
-{% if popular_packages %}
-<section class="popular-packages py-5" style="background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-6 fw-bold text-white">Popular Packages</h2>
-            <p class="text-light">Most loved by our travelers</p>
-        </div>
-        <div class="row g-4">
-            {% for package in popular_packages %}
-            <div class="col-lg-3 col-md-6">
-                <div class="card package-card shadow-sm h-100">
-                    <div class="position-relative">
-                        {% if package.featured_image %}<img src="{{ package.featured_image.url }}"{% else %}<img src="https://via.placeholder.com/400x300?text={{ package.name|urlencode }}"{% endif %} class="card-img-top" alt="{{ package.name }}" style="height: 200px; object-fit: cover;">
-                        {% if package.get_discount_percentage > 0 %}
-                        <span class="badge bg-danger position-absolute top-0 end-0 m-2">{{ package.get_discount_percentage }}% OFF</span>
-                        {% endif %}
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ package.name }}</h5>
-                        <p class="text-muted small mb-2">
-                            <i class="fas fa-map-marker-alt"></i> {{ package.destination_city }}
-                            <span class="ms-2"><i class="fas fa-clock"></i> {{ package.duration_days }}D/{{ package.duration_nights }}N</span>
-                        </p>
-                        <p class="card-text small">{{ package.short_description|truncatewords:15 }}</p>
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <div>
-                                <h5 class="text-primary mb-0">₹{{ package.price }}</h5>
-                                {% if package.original_price %}
-                                <small class="text-muted text-decoration-line-through">₹{{ package.original_price }}</small>
-                                {% endif %}
-                            </div>
-                            <a href="{% url 'package_detail' package.slug %}" class="btn btn-sm btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+        <div class="text-center mt-5">
+            <a href="{% url 'packages:package_list' %}" class="btn btn-lg" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 40px; border-radius: 50px;">
+                View All Packages <i class="fas fa-arrow-right ms-2"></i>
+            </a>
         </div>
     </div>
 </section>
-{% endif %}
 
-<!-- Categories -->
-{% if categories %}
-<section class="categories py-5" style="background: #0a0a0a;">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-6 fw-bold text-white">Travel Categories</h2>
-            <p class="text-light">Find your perfect adventure</p>
-        </div>
-        <div class="row g-4">
-            {% for category in categories %}
-            <div class="col-lg-2 col-md-4 col-sm-6">
-                <a href="{% url 'package_list' %}?category={{ category.slug }}" class="text-decoration-none">
-                    <div class="card text-center shadow-sm h-100 category-card">
-                        <div class="card-body">
-                            <i class="fas fa-mountain fa-3x text-primary mb-3"></i>
-                            <h6 class="card-title">{{ category.name }}</h6>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-{% endif %}
+<script>
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
 
-<!-- Testimonials -->
-{% if testimonials %}
-<section class="testimonials py-5" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="display-6 fw-bold text-white">What Our Travelers Say</h2>
-            <p class="text-light">Real experiences from real people</p>
-        </div>
-        <div class="row g-4">
-            {% for testimonial in testimonials %}
-            <div class="col-lg-4 col-md-6">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <span class="text-warning">{{ testimonial.get_star_rating }}</span>
-                        </div>
-                        <h6 class="card-subtitle mb-2">{{ testimonial.title }}</h6>
-                        <p class="card-text small text-muted">{{ testimonial.review|truncatewords:30 }}</p>
-                        <div class="d-flex align-items-center mt-3">
-                            {% if testimonial.customer_photo %}
-                            <img src="{{ testimonial.customer_photo.url }}" class="rounded-circle me-2" width="40" height="40" alt="{{ testimonial.customer_name }}">
-                            {% else %}
-                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">
-                                {{ testimonial.customer_name|first }}
-                            </div>
-                            {% endif %}
-                            <div>
-                                <strong>{{ testimonial.customer_name }}</strong>
-                                <small class="d-block text-muted">{{ testimonial.customer_location }}</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-{% endif %}
+// Add fade-in animation on scroll
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
 
-<!-- Call to Action -->
-<section class="cta py-5 text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-    <div class="container text-center">
-        <h2 class="display-6 fw-bold mb-3">Ready to Start Your Journey?</h2>
-        <p class="lead mb-4">Contact us today and let's plan your dream vacation</p>
-        <a href="{% url 'contact' %}" class="btn btn-light btn-lg">Get Started</a>
-    </div>
-</section>
+const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.feature-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(card);
+});
+</script>
 
 {% endblock %}
