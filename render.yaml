@@ -19,6 +19,8 @@ services:
         value: admin@travelagency.com
       - key: DJANGO_SUPERUSER_PASSWORD
         sync: false
+      - key: PEXELS_API_KEY
+        sync: false
 
 databases:
   - name: travel-agency-db
