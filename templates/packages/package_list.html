@@ -74,7 +74,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
-                            <a href="{% url 'package_list' %}" class="btn btn-outline-secondary w-100 mt-2">Clear Filters</a>
+                            <a href="{% url 'packages:package_list' %}" class="btn btn-outline-secondary w-100 mt-2">Clear Filters</a>
                         </form>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                                         {% endif %}
                                         <small class="d-block text-muted">per person</small>
                                     </div>
-                                    <a href="{% url 'package_detail' package.slug %}" class="btn btn-sm btn-primary">View Details</a>
+                                    <a href="{% url 'packages:package_detail' package.slug %}" class="btn btn-sm btn-primary">View Details</a>
                                 </div>
                             </div>
                         </div>
@@ -162,7 +162,7 @@
                     <i class="fas fa-search fa-4x text-muted mb-3"></i>
                     <h4 class="text-white">No packages found</h4>
                     <p class="text-light">Try adjusting your search filters</p>
-                    <a href="{% url 'package_list' %}" class="btn btn-primary">View All Packages</a>
+                    <a href="{% url 'packages:package_list' %}" class="btn btn-primary">View All Packages</a>
                 </div>
                 {% endif %}
             </div>

@@ -89,7 +89,7 @@ class Command(BaseCommand):
                 self.assign_images_to_package(package, images)
 
                 self.stdout.write(self.style.SUCCESS(
-                    f'  ✓ Assigned {len(images)} images to {package.name}'
+                    f'  Assigned {len(images)} images to {package.name}'
                 ))
                 processed += 1
 
@@ -163,10 +163,11 @@ class Command(BaseCommand):
                 response = requests.get(img_url, timeout=10)
                 response.raise_for_status()
 
-                # Save to temporary file
-                img_temp = NamedTemporaryFile(delete=True)
+                # Save to temporary file (Python 3.14 compatible)
+                img_temp = NamedTemporaryFile()
                 img_temp.write(response.content)
                 img_temp.flush()
+                img_temp.seek(0)
 
                 # Generate filename
                 filename = f'{package.slug}_{idx + 1}.jpg'

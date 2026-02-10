@@ -39,7 +39,7 @@
                         <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'package_list' %}">Packages</a>
+                        <a class="nav-link" href="{% url 'packages:package_list' %}">Packages</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'about' %}">About Us</a>
@@ -106,7 +106,7 @@
                     <h5 class="mb-3">Quick Links</h5>
                     <ul class="list-unstyled">
                         <li><a href="{% url 'home' %}" class="text-white-50 text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Home</a></li>
-                        <li><a href="{% url 'package_list' %}" class="text-white-50 text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Packages</a></li>
+                        <li><a href="{% url 'packages:package_list' %}" class="text-white-50 text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Packages</a></li>
                         <li><a href="{% url 'about' %}" class="text-white-50 text-decoration-none"><i class="fas fa-chevron-right me-2"></i>About Us</a></li>
                         <li><a href="{% url 'contact' %}" class="text-white-50 text-decoration-none"><i class="fas fa-chevron-right me-2"></i>Contact</a></li>
                     </ul>
