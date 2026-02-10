@@ -24,3 +24,7 @@ python-decouple==3.8
 
 # HTTP requests for image fetching
 requests==2.31.0
+
+# Cloud media storage (Cloudinary)
+cloudinary==1.41.0
+django-cloudinary-storage==0.3.0
