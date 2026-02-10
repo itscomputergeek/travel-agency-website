@@ -30,6 +30,11 @@ class Command(BaseCommand):
             default=5,
             help='Number of images to fetch per package (default: 5)',
         )
+        parser.add_argument(
+            '--force',
+            action='store_true',
+            help='Force re-download images even if they already exist',
+        )
 
     def handle(self, *args, **options):
         # Get API key from argument or environment
@@ -46,6 +51,7 @@ class Command(BaseCommand):
 
         images_per_package = options.get('images_per_package', 5)
         limit = options.get('limit')
+        force = options.get('force', False)
 
         # Get packages that need images
         packages = Package.objects.all()
@@ -61,8 +67,8 @@ class Command(BaseCommand):
 
         for package in packages:
             try:
-                # Check if package already has images
-                if package.featured_image and package.image_2 and package.image_3:
+                # Check if package already has images (skip if not forcing)
+                if not force and package.featured_image and package.image_2 and package.image_3:
                     self.stdout.write(self.style.WARNING(
                         f'Skipped (has images): {package.name}'
                     ))
@@ -86,7 +92,7 @@ class Command(BaseCommand):
                     continue
 
                 # Download and assign images to package
-                self.assign_images_to_package(package, images)
+                self.assign_images_to_package(package, images, force)
 
                 self.stdout.write(self.style.SUCCESS(
                     f'  Assigned {len(images)} images to {package.name}'
@@ -140,7 +146,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f'API Error: {str(e)}'))
             return []
 
-    def assign_images_to_package(self, package, images):
+    def assign_images_to_package(self, package, images, force=False):
         """Download and assign images to package fields"""
 
         # Map images to package fields
@@ -152,9 +158,9 @@ class Command(BaseCommand):
 
             field_name = image_fields[idx]
 
-            # Skip if field already has an image
+            # Skip if field already has an image (unless forcing)
             current_value = getattr(package, field_name)
-            if current_value:
+            if not force and current_value:
                 continue
 
             try:
